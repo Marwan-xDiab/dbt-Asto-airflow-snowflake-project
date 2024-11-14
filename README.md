@@ -1,48 +1,72 @@
-Overview
-========
+# ETL Project with Docker, Apache Airflow, Snowflake, Cosmos, and dbt
 
-Welcome to Astronomer! This project was generated after you ran 'astro dev init' using the Astronomer CLI. This readme describes the contents of the project, as well as how to run Apache Airflow on your local machine.
+## Project Overview
+This ETL project automates data extraction, transformation, and loading using a robust, containerized architecture. The setup integrates seamlessly with Snowflake for data storage and uses dbt for transformations. Cosmos simplifies dbt and Apache Airflow integration, providing a streamlined workflow orchestration.
 
-Project Contents
-================
+## Key Technologies
+- **Docker**: Provides a consistent and isolated environment for running services, simplifying deployment.
+- **Apache Airflow**: Manages and schedules workflows, with features like monitoring, retries, and task management.
+- **Snowflake**: Acts as the data warehouse for both raw and transformed data.
+- **Cosmos**: Integrates dbt workflows into Apache Airflow, making orchestration easy and efficient.
+- **dbt**: Transforms raw data into analysis-ready datasets.
 
-Your Astro project contains the following files and folders:
+## Architecture Overview
+The ETL pipeline includes the following components:
+1. **Data Ingestion**: Raw data is ingested into Snowflake.
+2. **Data Transformation**: dbt transforms the raw data in Snowflake into clean, structured datasets.
+3. **Workflow Orchestration**: Airflow, powered by Cosmos, manages the ETL process efficiently and reliably.
 
-- dags: This folder contains the Python files for your Airflow DAGs. By default, this directory includes one example DAG:
-    - `example_astronauts`: This DAG shows a simple ETL pipeline example that queries the list of astronauts currently in space from the Open Notify API and prints a statement for each astronaut. The DAG uses the TaskFlow API to define tasks in Python, and dynamic task mapping to dynamically print a statement for each astronaut. For more on how this DAG works, see our [Getting started tutorial](https://www.astronomer.io/docs/learn/get-started-with-airflow).
-- Dockerfile: This file contains a versioned Astro Runtime Docker image that provides a differentiated Airflow experience. If you want to execute other commands or overrides at runtime, specify them here.
-- include: This folder contains any additional files that you want to include as part of your project. It is empty by default.
-- packages.txt: Install OS-level packages needed for your project by adding them to this file. It is empty by default.
-- requirements.txt: Install Python packages needed for your project by adding them to this file. It is empty by default.
-- plugins: Add custom or community plugins for your project to this file. It is empty by default.
-- airflow_settings.yaml: Use this local-only file to specify Airflow Connections, Variables, and Pools instead of entering them in the Airflow UI as you develop DAGs in this project.
+### Diagram
+The diagram below illustrates the interaction between these components:
 
-Deploy Your Project Locally
+![Untitled](https://github.com/user-attachments/assets/174c29f1-bdab-47e0-9a1a-b67eb7efa93a)
+
+- **Raw Data** in Snowflake is transformed using **dbt**, and the output is stored back in Snowflake.
+- **Cosmos** integrates with Airflow to manage dbt workflows.
+- The entire setup is containerized and managed using **Docker**.
+
+## Cosmos Features
+Cosmos enhances the integration of dbt and Apache Airflow:
+- **Automatic DAG Generation**: Transforms dbt workflows into Apache Airflow DAGs, saving development time.
+- **Model-Centric Focus**: Lets you focus on building high-quality data models without worrying about orchestration.
+- **Efficient Orchestration**: Manages dependencies, retries, alerting, and scheduling automatically.
+  
+Setup Instructions
 ===========================
+### Prerequisites
+-    Docker: Make sure Docker is installed and running on your system.
+-    Snowflake Account: Set up and configure your Snowflake account.
 
-1. Start Airflow on your local machine by running 'astro dev start'.
+## Steps to Run
 
-This command will spin up 4 Docker containers on your machine, each for a different Airflow component:
+1. **Clone the Repository**
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
 
-- Postgres: Airflow's Metadata Database
-- Webserver: The Airflow component responsible for rendering the Airflow UI
-- Scheduler: The Airflow component responsible for monitoring and triggering tasks
-- Triggerer: The Airflow component responsible for triggering deferred tasks
+2. **Build and Run Docker Containers**
+    ```bash
+    git clone <repository-url>
+    cd <repository-directory>
+This command initializes the services, including Airflow, Snowflake integration, and dbt.
 
-2. Verify that all 4 Docker containers were created by running 'docker ps'.
+3. **Configure Airflow and Cosmos**
+-    Set up the necessary Airflow connections for Snowflake and other dependencies.
+-    Integrate Cosmos to manage dbt workflows efficiently.
 
-Note: Running 'astro dev start' will start your project with the Airflow Webserver exposed at port 8080 and Postgres exposed at port 5432. If you already have either of those ports allocated, you can either [stop your existing Docker containers or change the port](https://www.astronomer.io/docs/astro/cli/troubleshoot-locally#ports-are-not-available-for-my-local-airflow-webserver).
-
-3. Access the Airflow UI for your local Airflow project. To do so, go to http://localhost:8080/ and log in with 'admin' for both your Username and Password.
-
-You should also be able to access your Postgres Database at 'localhost:5432/postgres'.
-
-Deploy Your Project to Astronomer
-=================================
-
-If you have an Astronomer account, pushing code to a Deployment on Astronomer is simple. For deploying instructions, refer to Astronomer documentation: https://www.astronomer.io/docs/astro/deploy-code/
-
-Contact
-=======
-
-The Astronomer CLI is maintained with love by the Astronomer team. To report a bug or suggest a change, reach out to our support.
+4. **Run the ETL Workflow**
+-    Use the Airflow UI to monitor and trigger DAGs.
+-    Cosmos handles the orchestration, automatically generating Airflow DAGs from dbt workflows.
+    
+Monitoring and Troubleshooting
+===========================
+-    Use the Airflow Web UI to monitor task progress, view logs, and manage task retries.
+-    Snowflake provides insights into the state of data before and after transformations.
+-    dbt Logs: Check dbt logs for transformation-specific issues and troubleshooting.
+  
+Future Improvements
+===========================
+-    Add Data Quality Checks: Implement automated data validation to ensure data integrity.
+-    Scalability Enhancements: Integrate more data sources and optimize data transformations for scalability.
+-    Advanced Alerting: Set up custom alert mechanisms for better monitoring and quick issue resolution.
+Contributing
