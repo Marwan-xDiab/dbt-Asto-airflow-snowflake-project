@@ -1,0 +1,7 @@
+{
+    "dbt.dbtIntegration": "core",
+    "dbt.perspectiveTheme": "Vintage",
+    "dbt.enableNewLineagePanel": true,
+}
+
+

@@ -1,0 +1,13 @@
+data_pipline:
+  outputs:
+    dev:
+      account: kxhnuzk-QQ05074
+      database: dbt_db
+      password: 1rw@4Nm1.vois1
+      role: dbt_role
+      schema: dbt_schema
+      threads: 10
+      type: snowflake
+      user: MARWANXD
+      warehouse: dbt_wh
+  target: dev
