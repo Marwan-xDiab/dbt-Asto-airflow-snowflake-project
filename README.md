@@ -46,8 +46,7 @@ Setup Instructions
 
 2. **Build and Run Docker Containers**
     ```bash
-    git clone <repository-url>
-    cd <repository-directory>
+    docker-compose up --build
 This command initializes the services, including Airflow, Snowflake integration, and dbt.
 
 3. **Configure Airflow and Cosmos**
